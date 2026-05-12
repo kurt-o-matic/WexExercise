@@ -1,0 +1,9 @@
+<Solution>
+  <Project Path="WexExercise.Console.Demo/WexExercise.Console.Demo.csproj" />
+  <Project Path="WexExercise.Data.Tests/WexExercise.Data.Tests.csproj" />
+  <Project Path="WexExercise.Data/WexExercise.Data.csproj" />
+  <Project Path="WexExercise.ExchangeService.Tests/WexExercise.ExchangeService.Tests.csproj" />
+  <Project Path="WexExercise.Service/WexExercise.ExchangeService.csproj" />
+  <Project Path="WexExercise.TreasuryService.Tests/WexExercise.TreasuryService.Tests.csproj" />
+  <Project Path="WexExercise.TreasuryService/WexExercise.TreasuryService.csproj" />
+</Solution>
