@@ -7,8 +7,6 @@ namespace WexExercise.Data
 {
     public class Repository
     {
-        private static readonly Sequence idSeq = new Sequence();
-
         public required IStereoDb<Schema> Database { get; init; }
 
         private Repository() { }

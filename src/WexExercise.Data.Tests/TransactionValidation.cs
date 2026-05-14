@@ -5,8 +5,6 @@ namespace WexExercise.Data.Tests
     [TestClass]
     public sealed class TransactionValidation
     {
-        private readonly Sequence IdSeq = new Sequence();
-
         [TestMethod]
         public void CreateTransaction()
         {
