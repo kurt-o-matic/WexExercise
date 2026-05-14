@@ -9,10 +9,10 @@ using var log = new LoggerConfiguration()
     .CreateLogger();
 
 var options = new JsonSerializerOptions { WriteIndented = true };
-var repo = Repository.FromInMemoryDb();
+var repo = new Repository();
 var exch = new TreasuryExchangeRates();
 
-var demo = repo.AddTrans("demo record", new DateOnly(2020, 12, 31), 150.25m);
+var demo = repo.AddTransaction("demo record", new DateOnly(2020, 12, 31), 150.25m);
 
 log.Information(JsonSerializer.Serialize(demo, options));
 

@@ -16,7 +16,7 @@ namespace WexExercise.ExchangeService
 
         public Conversion? ConvertTransaction(Guid id, string countryCurrency)
         {
-            var trans = repo.GetTrans(id);
+            var trans = repo.GetTransaction(id);
 
             if (trans is not null)
             {

@@ -1,4 +1,4 @@
-﻿using static WexExercise.Data.Models;
+﻿using static WexExercise.Data.Entities;
 
 namespace WexExercise.Data.Tests
 {
@@ -44,6 +44,17 @@ namespace WexExercise.Data.Tests
                     Id = Guid.CreateVersion7(),
                     Description = "description",
                     TransactionDate = DateOnly.Parse("2001-01-01 8:30"),
+                    PurchaseAmount = new decimal(1.5)
+                };
+            });
+
+            Assert.Throws<ArgumentOutOfRangeException>(() =>
+            {
+                var transaction = new Transaction()
+                {
+                    Id = Guid.CreateVersion7(),
+                    Description = "description",
+                    TransactionDate = DateOnly.FromDateTime(DateTime.Today.AddDays(1)),
                     PurchaseAmount = new decimal(1.5)
                 };
             });

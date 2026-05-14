@@ -1,25 +1,25 @@
 
-using static WexExercise.Data.Models;
+using static WexExercise.Data.Entities;
 
 namespace WexExercise.Data.Tests;
 
 [TestClass]
 public class RepoValidation
 {
-    private static readonly Repository repo = Repository.FromInMemoryDb();
+    private static readonly Repository repo = new Repository();
 
     [TestMethod]
     public void RoundTrip()
     {
-        string testDesc = "this is a unit test";
+        string testDesc = "TEST DATA: this is a live data test";
 
         Guid id = repo
-            .AddTrans(testDesc, new DateOnly(2020, 12, 31), 150.25m)
+            .AddTransaction(testDesc, new DateOnly(2020, 12, 31), 150.25m)
             .Id;
 
-        Transaction? trans = repo.GetTrans(id);
+        Transaction? txn = repo.GetTransaction(id);
 
-        Assert.IsNotNull(trans);
-        Assert.AreEqual(testDesc, trans.Description);
+        Assert.IsNotNull(txn);
+        Assert.AreEqual(testDesc, txn.Description);
     }
 }

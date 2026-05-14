@@ -1,57 +1,47 @@
-﻿using StereoDB;
-using StereoDB.CSharp;
+﻿using LiteDB;
 
-using static WexExercise.Data.Models;
+using static WexExercise.Data.Entities;
 
 namespace WexExercise.Data
 {
     public class Repository
     {
-        public required IStereoDb<Schema> Database { get; init; }
+        // the database path is being fixed here in code to be managed by
+        // source code change control; configuration is only needed when
+        // called for by business requirements or change control policy
+        private LiteDatabase CreateDatabase() => new LiteDatabase($"{AppContext.BaseDirectory}wexex.db");
 
-        private Repository() { }
-
-        public static Repository FromInMemoryDb()
-        {
-            return new Repository()
-            {
-                Database = StereoDb.Create(new Schema(), StereoDbSettings.Default)
-            };
-        }
-
-        public Transaction AddTrans(string desciption, DateOnly transDate, decimal purchaceAmount)
+        public Transaction AddTransaction(string description, DateOnly transDate, decimal purchaceAmount)
         {
             var transaction = new Transaction()
             {
-                Id = Guid.CreateVersion7(), //primary key-friendly time ordered guid
-                Description = desciption,
+                Id = Guid.CreateVersion7(), //pk-friendly time ordered guid
+                Description = description,
                 TransactionDate = transDate,
                 PurchaseAmount = purchaceAmount
             };
 
-            Database.WriteTransaction(ctx =>
-            {
-                var transactions = ctx.UseTable(ctx.Schema.Transactions.Table);
+            using var db = CreateDatabase();
 
-                transactions.Set(transaction.Id, transaction);
-            });
+            var col = db.GetCollection<Transaction>("transactions");
+            col.Insert(transaction);
+            col.EnsureIndex(t => t.Id);
 
             return transaction;
         }
 
-        public Transaction? GetTrans(Guid id)
+        public Transaction? GetTransaction(Guid id)
         {
-            return Database.WriteTransaction(ctx =>
-            {
-                var transactions = ctx.UseTable(ctx.Schema.Transactions.Table);
+            using var db = CreateDatabase();
 
-                if (transactions.TryGet(id, out var transaction))
-                {
-                    return transaction;
-                }
+            var col = db.GetCollection<Transaction>("transactions");
+            col.EnsureIndex(t => t.Id);
 
-                return null;
-            });
+            var result = col.Query()
+                .Where(t => t.Id == id)
+                .FirstOrDefault();
+
+            return result;
         }
     }
 }

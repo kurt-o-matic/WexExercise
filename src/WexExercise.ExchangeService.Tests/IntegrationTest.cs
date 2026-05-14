@@ -6,7 +6,7 @@ namespace WexExercise.ExchangeService.Tests
     [TestClass]
     public sealed class IntegrationTest
     {
-        private static Repository repo = Repository.FromInMemoryDb();
+        private static Repository repo = new Repository();
         private static TreasuryExchangeRates exch = new TreasuryExchangeRates();
 
         private Guid NormId { get; init; }
@@ -15,11 +15,11 @@ namespace WexExercise.ExchangeService.Tests
         public IntegrationTest()
         {
             NormId = repo
-                .AddTrans("normal case", new DateOnly(2020, 12, 31), 150.25m)
+                .AddTransaction("normal case", new DateOnly(2020, 12, 31), 150.25m)
                 .Id;
 
             ExpId = repo
-                .AddTrans("expired case", new DateOnly(1970, 12, 31), 15.00m)
+                .AddTransaction("expired case", new DateOnly(1970, 12, 31), 15.00m)
                 .Id;
         }
 
