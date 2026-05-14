@@ -6,4 +6,6 @@
   <Project Path="WexExercise.Service/WexExercise.ExchangeService.csproj" />
   <Project Path="WexExercise.TreasuryService.Tests/WexExercise.TreasuryService.Tests.csproj" />
   <Project Path="WexExercise.TreasuryService/WexExercise.TreasuryService.csproj" />
+  <Project Path="WexExercise.WebApi.Tests/WexExercise.WebApi.Tests.csproj" Id="10b239a1-4919-4531-944a-b6b75090e4cf" />
+  <Project Path="WexExercise.WebApi/WexExercise.WebApi.csproj" Id="0a2ed4eb-ae4b-47b6-9a8e-eaaba58d6694" />
 </Solution>

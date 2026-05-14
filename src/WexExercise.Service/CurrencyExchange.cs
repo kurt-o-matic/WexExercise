@@ -9,14 +9,40 @@ namespace WexExercise.ExchangeService
         Repository repo,
         TreasuryExchangeRates exch)
     {
-        public Conversion ConvertTransaction(Guid id, string country, string currency)
+        public Guid AddPurchase(string description, DateOnly txnDate, decimal purchaseAmount)
         {
-            return ConvertTransaction(id, $"{country}-{currency}");
+            return AddPurchase(new Purchase()
+            {
+                Description = description,
+                TransactionDate = txnDate,
+                PurchaseAmount = purchaseAmount
+            });
         }
 
-        public Conversion ConvertTransaction(Guid id, string countryCurrency)
+        public Guid AddPurchase(Purchase purchase)
         {
-            var txn = repo.GetTransaction(id);
+            var txn = repo.AddTransaction(
+                purchase.Description, 
+                purchase.TransactionDate, 
+                purchase.PurchaseAmount);
+
+            return txn.Id;
+        }
+
+        public Converted ConvertTransaction(Guid id, string country, string currency)
+        {
+            return ConvertTransaction(new Conversion() 
+            { 
+                Id = id, 
+                Country = country, 
+                Currency = currency 
+            });
+        }
+
+        public Converted ConvertTransaction(Conversion conversion)
+        {
+            var txn = repo.GetTransaction(conversion.Id);
+            var countryCurrency = $"{conversion.Country}-{conversion.Currency}";
 
             if (txn is not null)
             {
@@ -24,9 +50,9 @@ namespace WexExercise.ExchangeService
 
                 if (rate is not null)
                 {
-                    return new Conversion()
+                    return new Converted()
                     {
-                        Id = id,
+                        Id = txn.Id,
                         Description = txn.Description,
                         TransactionDate = txn.TransactionDate,
                         PurchaseAmount = txn.PurchaseAmount,
@@ -42,7 +68,7 @@ namespace WexExercise.ExchangeService
             }
             else
             {
-                throw new KeyNotFoundException($"No transaction record found for ID:{id}.");
+                throw new KeyNotFoundException($"No transaction record found for ID:{conversion.Id}.");
             }
         }
     }
