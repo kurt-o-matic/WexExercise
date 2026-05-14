@@ -24,6 +24,17 @@ namespace WexExercise.ExchangeService.Tests
         }
 
         [TestMethod]
+        public void MissingCase()
+        {
+            var svc = new CurrencyExchange(repo, exch);
+
+            Assert.Throws<KeyNotFoundException>(() =>
+            {
+                svc.ConvertTransaction(Guid.NewGuid(), "Canada", "Dollar");
+            });
+        }
+
+        [TestMethod]
         public void ExpiredCase()
         {
             var ExpiredId = repo
