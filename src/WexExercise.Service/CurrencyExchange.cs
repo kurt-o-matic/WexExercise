@@ -37,7 +37,7 @@ namespace WexExercise.ExchangeService
                 }
                 else
                 {
-                    throw new KeyNotFoundException($"No valid exchange rate record found for {countryCurrency}.");
+                    throw new KeyNotFoundException($"This purchase cannot be converted to {countryCurrency}.");
                 }
             }
             else
