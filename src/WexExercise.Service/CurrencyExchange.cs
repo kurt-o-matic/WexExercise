@@ -5,9 +5,15 @@ using static WexExercise.ExchangeService.Models;
 
 namespace WexExercise.ExchangeService
 {
+    public interface ICurrencyExchange
+    {
+        public Guid AddPurchase(Purchase purchase);
+        public Converted ConvertTransaction(Conversion conversion);
+    }
+
     public class CurrencyExchange(
         Repository repo,
-        TreasuryExchangeRates exch)
+        TreasuryExchangeRates rates) : ICurrencyExchange
     {
         public Guid AddPurchase(string description, DateOnly txnDate, decimal purchaseAmount)
         {
@@ -46,7 +52,7 @@ namespace WexExercise.ExchangeService
 
             if (txn is not null)
             {
-                var rate = exch.GetRate(countryCurrency, txn.TransactionDate);
+                var rate = rates.GetRate(countryCurrency, txn.TransactionDate);
 
                 if (rate is not null)
                 {

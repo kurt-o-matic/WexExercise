@@ -1,0 +1,12 @@
+﻿@WexExercise.WebApi_HostAddress = https://localhost:7165
+
+POST {{WexExercise.WebApi_HostAddress}}/purchase
+Content-Type: application/json
+
+{
+  "description":"Testing web post...",
+  "transactionDate":"2020-12-31",
+  "purchaseAmount":"78.42"
+}
+
+###
