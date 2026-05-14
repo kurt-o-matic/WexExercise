@@ -1,5 +1,9 @@
 ﻿@WexExercise.WebApi_HostAddress = https://localhost:7165
 
+###
+
+# @name transaction
+
 POST {{WexExercise.WebApi_HostAddress}}/purchase
 Content-Type: application/json
 
@@ -7,6 +11,22 @@ Content-Type: application/json
   "description":"Testing web post...",
   "transactionDate":"2020-12-31",
   "purchaseAmount":"78.42"
+}
+
+###
+
+@txnid = {{transaction.response.body.$.id}}
+GET {{WexExercise.WebApi_HostAddress}}/convert?id={{txnid}}&country=Canada&currency=Dollar
+
+###
+
+POST {{WexExercise.WebApi_HostAddress}}/purchase
+Content-Type: application/json
+
+{
+  "description":"Future date exception",
+  "transactionDate":"2050-12-31",
+  "purchaseAmount":"22.22"
 }
 
 ###

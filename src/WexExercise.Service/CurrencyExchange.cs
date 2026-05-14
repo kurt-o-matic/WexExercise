@@ -8,7 +8,7 @@ namespace WexExercise.ExchangeService
     public interface ICurrencyExchange
     {
         public Guid AddPurchase(Purchase purchase);
-        public Converted ConvertTransaction(Conversion conversion);
+        public Converted ConvertTransaction(Guid id, string country, string currency);
     }
 
     public class CurrencyExchange(
