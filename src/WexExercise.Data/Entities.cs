@@ -11,9 +11,9 @@
                 get; 
                 init
                 {
-                    field = (value != null && value.Length <= 50)
+                    field = (value != null && value.Length >= 5 && value.Length <= 50)
                         ? value
-                        : throw new ArgumentOutOfRangeException("Description", "Description must be between 0 and 50 characters.");
+                        : throw new ArgumentOutOfRangeException("Description", "Description must be between 5 and 50 characters.");
                 }
             } //must not exceed 50 characters
 
