@@ -1,51 +1,57 @@
 ﻿using WexExercise.Data;
 using WexExercise.TreasuryService;
+using static WexExercise.ExchangeService.Models;
 
 namespace WexExercise.ExchangeService.Tests
 {
     [TestClass]
     public sealed class IntegrationTest
     {
-        private static Repository repo = new Repository();
-        private static TreasuryExchangeRates exch = new TreasuryExchangeRates();
+        private static CurrencyExchange service = new CurrencyExchange(
+            repo: new Repository(), 
+            rates: new TreasuryExchangeRates());
 
         [TestMethod]
         public void NormalCase()
         {
-            var NormalId = repo
-                .AddTransaction("normal case", new DateOnly(2020, 12, 31), 150.25m)
-                .Id;
+            var purchase = new Purchase()
+            {
+                Description = "normal test case",
+                TransactionDate = new DateOnly(2020, 01, 01),
+                PurchaseAmount = 150.25m
+            };
 
-            var svc = new CurrencyExchange(repo, exch);
-            var conv = svc.ConvertTransaction(NormalId, "Canada", "Dollar");
+            var NormalId = service.AddPurchase(purchase);
+            var converted = service.ConvertTransaction(NormalId, "Canada", "Dollar");
 
-            Assert.IsNotNull(conv);
-            Assert.AreNotEqual(0.0m, conv.ConvertedAmount);
+            Assert.IsNotNull(converted);
+            Assert.AreNotEqual(0.0m, converted.ConvertedAmount);
         }
 
         [TestMethod]
         public void MissingCase()
         {
-            var svc = new CurrencyExchange(repo, exch);
-
             Assert.Throws<KeyNotFoundException>(() =>
             {
-                svc.ConvertTransaction(Guid.NewGuid(), "Canada", "Dollar");
+                service.ConvertTransaction(Guid.NewGuid(), "Canada", "Dollar");
             });
         }
 
         [TestMethod]
         public void ExpiredCase()
         {
-            var ExpiredId = repo
-                .AddTransaction("expired case", new DateOnly(1970, 12, 31), 15.00m)
-                .Id;
-
-            var svc = new CurrencyExchange(repo, exch);
-
-            Assert.Throws<KeyNotFoundException>(() =>
+            var purchase = new Purchase()
             {
-                svc.ConvertTransaction(ExpiredId, "Canada", "Dollar");
+                Description = "expired test case",
+                TransactionDate = new DateOnly(1970, 01, 01),
+                PurchaseAmount = 15.00m
+            };
+
+            var ExpiredId = service.AddPurchase(purchase);
+
+            Assert.ThrowsAsync<KeyNotFoundException>(async () =>
+            {
+                service.ConvertTransaction(ExpiredId, "Canada", "Dollar");
             });
         }
     }

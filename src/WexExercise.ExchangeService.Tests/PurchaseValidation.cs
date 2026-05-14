@@ -1,6 +1,6 @@
 ﻿using static WexExercise.ExchangeService.Models;
 
-namespace WexExercise.WebApi.Tests
+namespace WexExercise.ExchangeService.Tests
 {
     [TestClass]
     public sealed class PurchaseValidation

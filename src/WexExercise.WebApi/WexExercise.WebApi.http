@@ -3,7 +3,6 @@
 ###
 
 # @name transaction
-
 POST {{WexExercise.WebApi_HostAddress}}/purchase
 Content-Type: application/json
 

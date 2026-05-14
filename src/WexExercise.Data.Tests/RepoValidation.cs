@@ -11,7 +11,7 @@ public class RepoValidation
     [TestMethod]
     public void RoundTrip()
     {
-        string testDesc = "TEST DATA: this is a live data test";
+        string testDesc = "TEST DATA: live data test";
 
         Guid id = repo
             .AddTransaction(testDesc, new DateOnly(2020, 12, 31), 150.25m)
