@@ -25,7 +25,7 @@ namespace WexExercise.Data
         {
             var transaction = new Transaction()
             {
-                Id = idSeq.Next(),
+                Id = Guid.CreateVersion7(), //primary key-friendly time ordered guid
                 Description = desciption,
                 TransactionDate = transDate,
                 PurchaseAmount = purchaceAmount
@@ -41,7 +41,7 @@ namespace WexExercise.Data
             return transaction;
         }
 
-        public Transaction? GetTrans(long id)
+        public Transaction? GetTrans(Guid id)
         {
             return Database.WriteTransaction(ctx =>
             {

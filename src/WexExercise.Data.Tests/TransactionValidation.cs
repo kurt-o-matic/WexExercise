@@ -12,7 +12,7 @@ namespace WexExercise.Data.Tests
         {
             var transaction = new Transaction()
             {
-                Id = IdSeq.Next(),
+                Id = Guid.CreateVersion7(),
                 Description = "description",
                 TransactionDate = DateOnly.FromDateTime(DateTime.Today),
                 PurchaseAmount = new decimal(1.5)
@@ -28,7 +28,7 @@ namespace WexExercise.Data.Tests
             {
                 var transaction = new Transaction()
                 {
-                    Id = IdSeq.Next(),
+                    Id = Guid.CreateVersion7(),
                     Description = "012345678901234567890123456789012345678901234567890",
                     TransactionDate = DateOnly.FromDateTime(DateTime.Today),
                     PurchaseAmount = new decimal(1.5)
@@ -43,7 +43,7 @@ namespace WexExercise.Data.Tests
             {
                 var transaction = new Transaction()
                 {
-                    Id = IdSeq.Next(),
+                    Id = Guid.CreateVersion7(),
                     Description = "description",
                     TransactionDate = DateOnly.Parse("2001-01-01 8:30"),
                     PurchaseAmount = new decimal(1.5)
@@ -58,7 +58,7 @@ namespace WexExercise.Data.Tests
             {
                 var transaction = new Transaction()
                 {
-                    Id = IdSeq.Next(),
+                    Id = Guid.CreateVersion7(),
                     Description = "description",
                     TransactionDate = DateOnly.FromDateTime(DateTime.Today),
                     PurchaseAmount = new decimal(-2.5)
@@ -69,7 +69,7 @@ namespace WexExercise.Data.Tests
             {
                 var transaction = new Transaction()
                 {
-                    Id = IdSeq.Next(),
+                    Id = Guid.CreateVersion7(),
                     Description = "description",
                     TransactionDate = DateOnly.FromDateTime(DateTime.Today),
                     PurchaseAmount = new decimal(1.021)

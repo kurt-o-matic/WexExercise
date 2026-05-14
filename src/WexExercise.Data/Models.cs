@@ -4,13 +4,8 @@
     {
         public record Transaction
         {
-            //[Required]
-            //[DisplayName("Unique Identifier")]
-            public required long Id { get; init; }
+            public required Guid Id { get; init; }
 
-            //[Required]
-            //[DisplayName("Description")]
-            //[StringLength(maximumLength: 50, MinimumLength = 0, ErrorMessage = "{0} must be between {2} and {1} characters.")]
             public required string Description 
             { 
                 get; 
@@ -22,14 +17,15 @@
                 }
             } //must not exceed 50 characters
 
-            //[Required]
-            //[DisplayName("Transaction Date")]
-            public required DateOnly TransactionDate { get; init; } //must be a valid date format
+            public required DateOnly TransactionDate { get; init
+                {
+                    if (value > DateOnly.FromDateTime(DateTime.Today))
+                        throw new ArgumentOutOfRangeException("TransactionDate", "TransactionDate must be present or past date.");
 
-            //[Required]
-            //[DisplayName("Purchase Amount")]
-            //[DisplayFormat(DataFormatString = "{0:C}")]
-            //[RegularExpression(@"\d{1,3}(,?\d{3})*(\.\d{2})?$", ErrorMessage = "Invalid USD currency.")]
+                    field = value;
+                }
+            } //must be a valid date format
+
             public required decimal PurchaseAmount
             {
                 get;

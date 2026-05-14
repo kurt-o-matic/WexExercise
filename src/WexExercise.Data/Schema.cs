@@ -7,7 +7,7 @@ namespace WexExercise.Data
 {
     public class TransactionSchema
     {
-        public required ITable<long, Transaction> Table { get; init; }
+        public required ITable<Guid, Transaction> Table { get; init; }
     }
 
     public class Schema : IDbSchema
@@ -18,7 +18,7 @@ namespace WexExercise.Data
         {
             Transactions = new TransactionSchema
             {
-                Table = StereoDb.CreateTable<long, Transaction>("transactions")
+                Table = StereoDb.CreateTable<Guid, Transaction>("transactions")
             };
         }
 

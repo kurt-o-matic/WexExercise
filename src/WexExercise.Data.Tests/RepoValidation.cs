@@ -13,7 +13,7 @@ public class RepoValidation
     {
         string testDesc = "this is a unit test";
 
-        long id = repo
+        Guid id = repo
             .AddTrans(testDesc, new DateOnly(2020, 12, 31), 150.25m)
             .Id;
 

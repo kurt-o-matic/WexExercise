@@ -9,12 +9,12 @@ namespace WexExercise.ExchangeService
         Repository repo,
         TreasuryExchangeRates exch)
     {
-        public Conversion? ConvertTransaction(long id, string country, string currency)
+        public Conversion? ConvertTransaction(Guid id, string country, string currency)
         {
             return ConvertTransaction(id, $"{country}-{currency}");
         }
 
-        public Conversion? ConvertTransaction(long id, string countryCurrency)
+        public Conversion? ConvertTransaction(Guid id, string countryCurrency)
         {
             var trans = repo.GetTrans(id);
 

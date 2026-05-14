@@ -9,8 +9,8 @@ namespace WexExercise.ExchangeService.Tests
         private static Repository repo = Repository.FromInMemoryDb();
         private static TreasuryExchangeRates exch = new TreasuryExchangeRates();
 
-        private long NormId { get; init; }
-        private long ExpId { get; init; }
+        private Guid NormId { get; init; }
+        private Guid ExpId { get; init; }
 
         public IntegrationTest()
         {

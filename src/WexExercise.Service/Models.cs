@@ -4,7 +4,7 @@
     {
         public record Conversion
         {
-            public required long Id { get; init; }
+            public required Guid Id { get; init; }
             public required string Description { get; init; }
             public required DateOnly TransactionDate { get; init; }
             public required decimal PurchaseAmount { get; init; }
