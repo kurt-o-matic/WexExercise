@@ -9,7 +9,7 @@ namespace WexExercise.Data
         // the database path is being fixed here in code to be managed by
         // source code change control; configuration is only needed when
         // called for by business requirements or change control policy
-        private LiteDatabase CreateDatabase() => new LiteDatabase($"{AppContext.BaseDirectory}wexex.db");
+        private LiteDatabase CreateDatabase() => new LiteDatabase($"Filename={AppContext.BaseDirectory}wexex.db;Connection=shared");
 
         public Transaction AddTransaction(string description, DateOnly transDate, decimal purchaceAmount)
         {

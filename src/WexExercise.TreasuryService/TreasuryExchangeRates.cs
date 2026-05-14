@@ -7,18 +7,23 @@ namespace WexExercise.TreasuryService
     public class TreasuryExchangeRates
     {
         private static readonly HttpClient client = new HttpClient();
+
+        // the Treasury URL is being fixed here in code to be managed by
+        // source code change control; configuration is only needed when
+        // called for by business requirements or change control policy
         private static readonly string baseUrl = "https://api.fiscaldata.treasury.gov/services/api/fiscal_service/";
         private static readonly string exchRatesUrl = "v1/accounting/od/rates_of_exchange";
+        private static readonly int expirationInterval = 6; // expiration interval in months
 
-        public CurrencyExchangeRate GetRate(string country, string currency, DateOnly transDate)
+        public CurrencyExchangeRate? GetRate(string country, string currency, DateOnly transDate)
         {
             return GetRate($"{country}-{currency}", transDate);
         }
 
-        public CurrencyExchangeRate GetRate(string countryCurrency, DateOnly transDate)
+        public CurrencyExchangeRate? GetRate(string countryCurrency, DateOnly transDate)
         {
             string fields = "fields=country_currency_desc,exchange_rate,record_date";
-            string filter = $"filter=country_currency_desc:eq:{countryCurrency},record_date:gte:{transDate.AddMonths(-6).ToString("yyyy-MM-dd")},record_date:lte:{transDate.ToString("yyyy-MM-dd")}";
+            string filter = $"filter=country_currency_desc:eq:{countryCurrency},record_date:gte:{transDate.AddMonths(expirationInterval * -1).ToString("yyyy-MM-dd")},record_date:lte:{transDate.ToString("yyyy-MM-dd")}";
             string sort = "sort=-record_date";
 
             string url = baseUrl
@@ -48,7 +53,7 @@ namespace WexExercise.TreasuryService
                 rates.Add(JsonSerializer.Deserialize<CurrencyExchangeRate>(rate, options)!);
             }
 
-            return rates.FirstOrDefault() ?? new CurrencyExchangeRate();
+            return rates.FirstOrDefault();
         }
     }
 }

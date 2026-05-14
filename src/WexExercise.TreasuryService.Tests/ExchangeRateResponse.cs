@@ -10,7 +10,7 @@
         {
             var rate = exchangeRates.GetRate("Canada", "Dollar", new DateOnly(2020, 12, 31));
 
-            Assert.IsNotEmpty(rate.CountryCurrency);
+            Assert.IsNotNull(rate);
         }
 
         [TestMethod]
@@ -18,7 +18,7 @@
         {
             var rate = exchangeRates.GetRate("Canada", "Dollar", new DateOnly(1970, 12, 31));
 
-            Assert.IsEmpty(rate.CountryCurrency);
+            Assert.IsNull(rate);
         }
     }
 }
