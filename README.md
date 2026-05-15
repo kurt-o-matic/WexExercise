@@ -73,7 +73,7 @@ A result object formatted in application/json is returned:
 ```
 {
   "id": "019e2929-090a-74b5-ae6b-edff75a1cc07",
-  "description": "Testing web post...",
+  "description": "Example Purchase",
   "transactionDate": "2020-12-31",
   "purchaseAmount": 78.42,
   "countryCurrency": "Canada-Dollar",
